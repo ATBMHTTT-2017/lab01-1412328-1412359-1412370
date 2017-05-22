@@ -1,1 +1,36 @@
-
+--DAC3: Chi TruongPhong, TruongChiNhanh duoc cap quyen thuc thi sp_CapNhatInfoPhongBan cua minh.
+--Tao sp_CapNhatInfoPhongBan
+DROP PROCEDURE sp_CapNhatInfoPhongBan;
+--store cua TruongChiNhanh
+CREATE OR REPLACE PROCEDURE sp_CapNhatInfoPhongBan1(newName VARCHAR) 
+AS  
+  user varchar2(5);
+  cn_id number;
+BEGIN
+  user := SYS_CONTEXT('USERENV', 'SESSION_USER');
+  SELECT  maCN INTO cn_id FROM system.ChiNhanh WHERE truongChiNhanh = user;
+  
+  UPDATE  system.PhongBan SET tenPhong = newName 
+  WHERE   chiNhanh = cn_id;
+END;
+--Store cua TruongPhong
+CREATE OR REPLACE PROCEDURE sp_CapNhatInfoPhongBan2(newName VARCHAR) 
+AS  
+BEGIN
+  UPDATE  system.PhongBan SET tenPhong = newName 
+  WHERE   truongPhong = user;
+END;
+--Tao them role TruongChiNhanh
+CREATE ROLE TruongChiNhanh NOT IDENTIFIED;
+GRANT create session TO TruongChiNhanh;
+--Cap quyen update tren bang PhongBang cho role TruongPhong va TruongChiNhanh
+GRANT update ON PhongBan TO TruongPhong, TruongChiNhanh;
+--Va cap mot so quyen select hop le khac
+GRANT select ON PhongBan TO TruongPhong, TruongChiNhanh;
+GRANT select ON dual TO TruongPhong, TruongChiNhanh;
+--Cap quyen exec tren sp_CapNhatInfoPhongBan cho 2 role nay
+GRANT EXECUTE ON sp_CapNhatInfoPhongBan1 TO TruongChiNhanh;
+GRANT EXECUTE ON sp_CapNhatInfoPhongBan2 TO TruongPhong;
+--Gan role TruongChiNhanh, TruongPhong cho cac user
+GRANT TruongChiNhanh TO NV23,NV16,NV14,NV7,NV1;
+GRANT TruongPhong TO NV2,NV8,NV17,NV12,NV21;
