@@ -1,1 +1,30 @@
+--VP3: TruongPhong chi duoc phep doc ChiTieu cua DuAn do PhongBan minh quan ly
+--voi nhung du an khong thuoc quyen quan ly thi khong xem duoc soTien
+CREATE OR REPLACE FUNCTION sec_function4(p_schema varchar2, p_obj varchar2)
+RETURN varchar2
+AS
+  user varchar2(5);
+  da_id number;
+  p_id number;
+BEGIN
+  user := SYS_CONTEXT('USERENV', 'SESSION_USER');
+  SELECT maPhong INTO p_id FROM system.PhongBan WHERE truongPhong = user;
+  SELECT maDA INTO da_id FROM system.DuAn WHERE phongChuTri = p_id;
+  RETURN 'duAn = ' || TO_CHAR(da_id);
+END;
 
+BEGIN dbms_rls.add_policy (
+object_schema => 'system', 
+object_name => 'ChiTieu',
+policy_name => 'my_policy4',
+function_schema => 'system',
+policy_function => 'sec_function4',
+statement_types =>'select',
+sec_relevant_cols => 'soTien',
+sec_relevant_cols_opt => dbms_rls.ALL_ROWS);
+END;
+
+--Xoa policy
+BEGIN 
+  dbms_rls.drop_policy('system','ChiTieu','my_policy3');
+END;
