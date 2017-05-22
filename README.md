@@ -45,9 +45,14 @@ Liệt kê các **yêu cầu nâng cao** đã thực hiện:
 ## Demo
 
 Link ảnh GIF demo ứng dụng:
-* DAC 1: Chỉ trưởng phòng được phép cập nhật và thêm thông tin vào dự án
-![Video Walkthrough](dac1.gif)
+* DAC 1: Chỉ trưởng phòng được phép cập nhật và thêm thông tin vào dự án.
+![dac1](dac1.gif)
 
+* DAC 2: Giám đốc được phép xem thông tin dự án gồm (mã dự án, tên dự án, kinh phí, tên phòng chủ trì, tên chi nhánh chủ trì, tên trưởng dự án và tổng chi).
+![dac2](dac2.gif)
+
+* VPD 1: Tất cả nhân viên bình thường (trừ trưởng phòng, trưởng chi nhánh và các trưởng dự án) chỉ được phép xem thông tin nhân viên trong phòng của mình, chỉ được xem lương của bản thân.
+![vpd1](vpd1.gif)
 Tạo ảnh GIF với chương trình [LiceCap](http://www.cockos.com/licecap/).
 
 
