@@ -1,1 +1,16 @@
-# sample policy 1
+--DAC2: Giam doc duoc phep xem thong tin du an gom (ma du an, ten du an, kinh phi, ten phong chu tri, ten chi nhanh chu tri, ten truong du an va kinh phi).
+
+--Tao view
+create view GiamDoc_view1 as
+select maDA, tenDA, kinhPhi, tenPhong, tenCN, hoTen,SUM(soTien) as "tongChi"
+from DuAn a, PhongBan b, ChiNhanh c, NhanVien d, ChiTieu e
+where a.maDA = e.duAn and b.maPhong = a.PHONGCHUTRI and c.maCN = b.CHINHANH and d.maNV = a.TRUONGDA 
+group by (maDA, tenDA, kinhPhi, tenPhong, tenCN, hoTen, soTien);
+
+--Tao role GiamDoc
+create role GiamDoc not identified;
+grant create session to GiamDoc;
+
+--Cap quyen cho user
+grant GiamDoc to NV3, NV6, NV12, NV15, NV25;
+grant select on GiamDoc_view1 to GiamDoc;
