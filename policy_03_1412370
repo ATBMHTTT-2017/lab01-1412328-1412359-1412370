@@ -1,1 +1,10 @@
-
+--DAC1: Chi Truong Phong duoc phep Update va Insert tren bang DuAn
+--Ta co Truong Phong la cac users: NV2, NV8, NV17, NV12, NV21 (trong bang PhongBan)
+--Tao role TruongPhong, cap quyen role nay theo yeu cau va gan role nay cho cac user tren
+CREATE ROLE TruongPhong NOT IDENTIFIED;
+GRANT create session TO TruongPhong;
+GRANT insert ON DuAn TO TruongPhong;
+GRANT update ON DuAn TO TruongPhong;
+GRANT select ON DuAn TO TruongPhong;
+GRANT select ON ChiTieu TO TruongPhong;
+GRANT TruongPhong TO NV2,NV8,NV17,NV12,NV21;
