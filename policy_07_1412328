@@ -1,1 +1,27 @@
+--VP2:Truong Du An chi duoc phep doc, ghi thong tin chi tieu cua du an minh quan ly
+--Tao ham chinh sach cho VP2
+CREATE OR REPLACE FUNCTION sec_function3(p_schema varchar2, p_obj varchar2)
+RETURN varchar2
+AS
+  user varchar2(5);
+  da_id number;
+BEGIN
+  user := SYS_CONTEXT('USERENV', 'SESSION_USER');
+  SELECT maDA INTO da_id FROM system.DuAn WHERE truongDA = user;
+  RETURN 'duAn = ' || TO_CHAR(da_id);
+END;
+--Gan ham chinh sach vao bang Chi Tieu
+BEGIN dbms_rls.add_policy (
+object_schema => 'system', 
+object_name => 'ChiTieu',
+policy_name => 'my_policy3',
+function_schema => 'system',
+policy_function => 'sec_function3',
+statement_types =>'select,insert,update');
+END;
 
+--Tao role Truong Du An
+CREATE ROLE TruongDuAn NOT IDENTIFIED;
+GRANT create session TO TruongDuAn;
+GRANT select ON ChiTieu TO TruongDuAn;
+GRANT TruongDuAn to NV10, NV20, NV16, NV13, NV5;
