@@ -45,8 +45,8 @@ Liệt kê các **yêu cầu nâng cao** đã thực hiện:
 ## Demo
 
 Link ảnh GIF demo ứng dụng:
-
-![Video Walkthrough](demo.gif)
+* DAC 1: Chỉ trưởng phòng được phép cập nhật và thêm thông tin vào dự án
+![Video Walkthrough](dac1.gif)
 
 Tạo ảnh GIF với chương trình [LiceCap](http://www.cockos.com/licecap/).
 
