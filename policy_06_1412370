@@ -1,1 +1,48 @@
+--VPD1: 
+--Tao ham chinh sach 1 (loc ra cac manv ung voi user dang connect)
+GRANT EXEMPT ACCESS POLICY TO system;
+CREATE OR REPLACE FUNCTION sec_function1(p_schema varchar2, p_obj varchar2)
+RETURN varchar2
+AS
+  user varchar2(5);
+BEGIN
+  user := SYS_CONTEXT('USERENV', 'SESSION_USER');
+  RETURN 'maNV = ''' || user || '''';
+END;
+--Tao ham chinh sach 2 (loc ra cac dong ma phong tuong ung)
+CREATE OR REPLACE FUNCTION sec_function2(p_schema varchar2, p_obj varchar2)
+RETURN varchar2
+AS
+  user varchar2(5);
+  p_id number;
+BEGIN
+  user := SYS_CONTEXT('USERENV', 'SESSION_USER');
+  SELECT maPhong INTO p_id FROM system.NhanVien WHERE maNV = user;
+  RETURN 'maPhong = ' || TO_CHAR(p_id);
+END;
 
+--Gan 2 ham chinh sach vao NhanVien
+BEGIN dbms_rls.add_policy (
+object_schema => 'system', 
+object_name => 'NhanVien',
+policy_name => 'my_policy1',
+function_schema => 'system',
+policy_function => 'sec_function1',
+statement_types =>'select',
+sec_relevant_cols => 'luong',
+sec_relevant_cols_opt => dbms_rls.ALL_ROWS);
+END;
+
+BEGIN dbms_rls.add_policy (
+object_schema => 'system', 
+object_name => 'NhanVien',
+policy_name => 'my_policy2',
+function_schema => 'system',
+policy_function => 'sec_function2',
+statement_types =>'select');
+END;
+--Tao role NhanVien
+CREATE ROLE NhanVien NOT IDENTIFIED;
+GRANT create session TO NhanVien;
+GRANT select ON NhanVien TO NhanVien;
+GRANT NhanVien to NV4, NV5, NV9, NV17, NV24;
