@@ -45,14 +45,24 @@ Liệt kê các **yêu cầu nâng cao** đã thực hiện:
 ## Demo
 
 Link ảnh GIF demo ứng dụng:
-* DAC 1: Chỉ trưởng phòng được phép cập nhật và thêm thông tin vào dự án.
+* policy_03: Chỉ trưởng phòng được phép cập nhật và thêm thông tin vào dự án.
 ![dac1](dac1.gif)
 
-* DAC 2: Giám đốc được phép xem thông tin dự án gồm (mã dự án, tên dự án, kinh phí, tên phòng chủ trì, tên chi nhánh chủ trì, tên trưởng dự án và tổng chi).
+* policy_04: Giám đốc được phép xem thông tin dự án gồm (mã dự án, tên dự án, kinh phí, tên phòng chủ trì, tên chi nhánh chủ trì, tên trưởng dự án và tổng chi).
 ![dac2](dac2.gif)
 
-* VPD 1: Tất cả nhân viên bình thường (trừ trưởng phòng, trưởng chi nhánh và các trưởng dự án) chỉ được phép xem thông tin nhân viên trong phòng của mình, chỉ được xem lương của bản thân.
+* policy_05 Chỉ trưởng phòng, trưởng chi nhánh được cấp quyền thực thi stored procedure cập nhật thông tin phòng ban của mình.
+![dac3](dac3.gif)
+
+* policy_06: Tất cả nhân viên bình thường (trừ trưởng phòng, trưởng chi nhánh và các trưởng dự án) chỉ được phép xem thông tin nhân viên trong phòng của mình, chỉ được xem lương của bản thân.
 ![vpd1](vpd1.gif)
+
+* policy_07: Trưởng dự án chỉ được phép đọc, ghi thông tin chi tiêu của dự án mình quản lý.
+![vpd2](vpd2.gif)
+
+* policy_08: Trưởng phòng chỉ được phép đọc thông tin chi tiêu của dự án trong phòng ban mình quản lý. Với những dự án không thuộc phòng ban của mình, các trưởng phòng được phép xem thông tin chi tiêu nhưng không được phép xem số tiền cụ thể.
+![vpd3](vpd3.gif)
+
 Tạo ảnh GIF với chương trình [LiceCap](http://www.cockos.com/licecap/).
 
 
